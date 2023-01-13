@@ -1,29 +1,28 @@
 import WishList from "./classes/wishlist";
 
 let form = document.querySelector("#submitForm");
-let make = document.querySelector("#makeInput");
-let model = document.querySelector("#modelInput");
-let year = document.querySelector("#yearInput");
-let makeP = document.querySelector("#car-make");
-let modelP = document.querySelector("#car-model");
-let yearP = document.querySelector("#car-year");
+let makeInput = document.querySelector("#makeInput");
+let modelInput = document.querySelector("#modelInput");
+let yearInput = document.querySelector("#yearInput");
+let makeDisplay = document.querySelector("#car-make");
+let modelDisplay = document.querySelector("#car-model");
+let yearDisplay = document.querySelector("#car-year");
 let removeBtn = document.querySelector("#removeBtn");
-let wishlistUL = document.querySelector("#wishlistUL > ul");
+let wishlistUl = document.querySelector("#wishListContainer > ul");
 
 let wishlist = new WishList();
 
 form.addEventListener("submit", addCar);
+
 removeBtn.addEventListener("click", removeCar);
 
-function updateDOMList(make, model, year) {
-  console.log("Inside the updateDOMList function:" + make, model, year); //does this work?
-
-  wishlistUL.innerHTML = (make, model, year);
+function updateDOMList() {
+  wishlistUl.innerHTML = "";
   wishlist.list.forEach((car) => {
     const li = document.createElement("li");
     li.textContent = `${car.make} ${car.model}`;
     li.addEventListener("click", () => showCarDetails(car));
-    wishlistUL.appendChild(li);
+    wishlistUl.appendChild(li);
   });
 }
 
@@ -42,11 +41,9 @@ function addCar(event) {
   let model = modelInput.value;
   let year = yearInput.value;
 
-  console.log("Inside addCar function:" + make, model, year); //does this work?
-
   wishlist.add(make, model, year);
 
-  updateDOMList(make, model, year);
+  updateDOMList();
 }
 
 function removeCar() {
